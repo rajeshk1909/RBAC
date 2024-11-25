@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Carlo';
+  src: url('/fonts/Carlo-Regular.ttf') format('truetype'); /* Adjust path accordingly */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.btn-toast {
+  @apply px-6 py-2 rounded-md text-white font-semibold focus:outline-none transition duration-200 ease-in-out transform hover:scale-105;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply custom scrollbar styling */
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: #e0e0e0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(94deg, #f04238 7.77%, #4d5fea 96.37%);
+  border-radius: 3px;
+}
+
+html {
+  scroll-behavior: smooth;
+}

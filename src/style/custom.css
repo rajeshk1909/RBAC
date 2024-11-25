@@ -1,0 +1,31 @@
+/* Box shadow for Navbar */
+.custom-shadow {
+  box-shadow: 0px 3px 3px 0px rgba(61, 46, 46, 0.53);
+  -webkit-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.53);
+}
+
+/* Custom class for gradient border on hover */
+.border-bottom-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-bottom-gradient::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(94deg, #f04238 7.77%, #4d5fea 96.37%);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.border-bottom-gradient:hover::after {
+  transform: scaleX(1);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
