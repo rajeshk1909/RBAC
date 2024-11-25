@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Carlo';
-  src: url('/fonts/Carlo-Regular.ttf') format('truetype'); /* Adjust path accordingly */
-  font-weight: normal;
-  font-style: normal;
-}
-
-
 .btn-toast {
   @apply px-6 py-2 rounded-md text-white font-semibold focus:outline-none transition duration-200 ease-in-out transform hover:scale-105;
 }
