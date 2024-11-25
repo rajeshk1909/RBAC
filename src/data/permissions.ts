@@ -1,1 +1,3 @@
-export const permissions = ["READ", "WRITE", "DELETE"];
+export const permissions = ["Read", "Write", "Delete"];
+
+export type permissionsTypes = (typeof permissions)[0]

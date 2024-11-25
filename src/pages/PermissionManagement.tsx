@@ -1,4 +1,3 @@
-// PermissionManagement.tsx
 import React from "react"
 import PermissionTable from "../components/PermissionTable"
 

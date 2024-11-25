@@ -71,10 +71,12 @@ const Dashboard: React.FC = () => {
             key={card.id}
             className='bg-white cursor-pointer shadow-md rounded-lg p-6 flex items-center justify-between hover:shadow-xl transition duration-300'>
             <div>
-              <h4 className='text-gray-500 text-lg font-semibold'>
+              <h4 className='text-gray-500 font-lexend text-lg font-medium'>
                 {card.title}
               </h4>
-              <p className='text-2xl font-bold text-gray-800'>{card.value}</p>
+              <p className='text-2xl font-lexend font-medium text-gray-800'>
+                {card.value}
+              </p>
             </div>
             {card.icon}
           </div>

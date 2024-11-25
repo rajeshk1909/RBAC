@@ -1,10 +1,15 @@
 import React from "react"
 import { usersData, usersDataTypes } from "../data/usersData"
 import ActionButton from "./ActionButton"
+import UserEdit from "./UserEdit"
 
 const UserTable: React.FC = () => {
+  const [open, setOpen] = React.useState(false)
 
-  const handleEdit = (id : number) => {
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
+  const handleEdit = (id: number) => {
     console.log(id)
   }
 
@@ -34,6 +39,7 @@ const UserTable: React.FC = () => {
             </th>
           </tr>
         </thead>
+        
         <tbody className='text-sm'>
           {usersData.map((user: usersDataTypes, index: number) => (
             <tr
@@ -48,7 +54,10 @@ const UserTable: React.FC = () => {
               <td className='px-6 py-4 border-b flex gap-5 items-center justify-center'>
                 <ActionButton
                   type='edit'
-                  onClick={() => handleEdit(index)}
+                  onClick={() => {
+                    handleEdit(index)
+                    handleOpen()
+                  }}
                   index={1}
                 />
                 <ActionButton
@@ -61,6 +70,7 @@ const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <UserEdit open={open} handleClose={handleClose} />
     </div>
   )
 }
