@@ -1,61 +1,83 @@
-import { useState } from "react"
-import { rolesData, rolesType } from "../data/roles"
-import ActionButton from "./ActionButton"
-import RoleEdit from "./RoleEdit"
+import { Role } from '../types';
+import { Edit2, Trash2, MoreVertical } from 'lucide-react';
 
-const dataTable = () => {
-  const [open, setOpen] = useState<boolean>(false)
+interface RoleTableProps {
+  roles: Role[];
+  onEdit: (role: Role) => void;
+  onDelete: (roleId: string) => void;
+}
 
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  const handleEdit = (id: number) => {
-    console.log(id)
-  }
-
-  const handleDelete = (id: number) => {
-    console.log(id)
-  }
-
+export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
   return (
-    <div className='overflow-x-auto'>
-      <table className='min-w-full table-auto border-collapse'>
-        <thead className='font-montserrat font-semibold uppercase '>
+    <div className="bg-white rounded-lg shadow overflow-hidden">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
-            <th className='px-4 py-2 border'>data Name</th>
-            <th className='px-4 py-2 border'>Permissions</th>
-            <th className='px-4 py-2 border'>Actions</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Role Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Description
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Permissions
+            </th>
+            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+            </th>
           </tr>
         </thead>
-        <tbody className='font-lexend font-medium'>
-          {rolesData.map((data: rolesType, index: number) => (
-            <tr key={index}>
-              <td className='px-4 py-2 border text-center'>{data.name}</td>
-              <td className='px-4 py-2 border text-center'>
-                {data.permissions.join(", ")}
+        <tbody className="bg-white divide-y divide-gray-200">
+          {roles.map((role) => (
+            <tr key={role.id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm font-medium text-gray-900">
+                  {role.name}
+                </div>
               </td>
-              <td className='px-4 py-2 border flex items-center gap-5 justify-center'>
-                <ActionButton
-                  type='edit'
-                  onClick={() => {
-                    handleEdit(index)
-                    handleOpen()
-                  }}
-                  index={1}
-                />
-                <ActionButton
-                  type='delete'
-                  onClick={() => handleDelete(index)}
-                  index={1}
-                />
+              <td className="px-6 py-4">
+                <div className="text-sm text-gray-500">{role.description}</div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="flex flex-wrap gap-1">
+                  {role.permissions.slice(0, 3).map((permission) => (
+                    <span
+                      key={permission.id}
+                      className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800"
+                    >
+                      {permission.name}
+                    </span>
+                  ))}
+                  {role.permissions.length > 3 && (
+                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">
+                      +{role.permissions.length - 3} more
+                    </span>
+                  )}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div className="flex items-center justify-end space-x-2">
+                  <button
+                    onClick={() => onEdit(role)}
+                    className="text-blue-600 hover:text-blue-900"
+                  >
+                    <Edit2 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(role.id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                  <button className="text-gray-400 hover:text-gray-600">
+                    <MoreVertical className="h-4 w-4" />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <RoleEdit open={open} handleClose={handleClose} />
     </div>
-  )
+  );
 }
-
-export default dataTable

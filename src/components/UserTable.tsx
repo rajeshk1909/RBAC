@@ -1,78 +1,98 @@
-import React from "react"
-import { usersData, usersDataTypes } from "../data/usersData"
-import ActionButton from "./ActionButton"
-import UserEdit from "./UserEdit"
+import { User } from "../types"
+import { Edit2, Trash2, MoreVertical } from "lucide-react"
 
-const UserTable: React.FC = () => {
-  const [open, setOpen] = React.useState(false)
+interface UserTableProps {
+  users: User[]
+  onEdit: (user: User) => void
+  onDelete: (userId: string) => void
+}
 
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  const handleEdit = (id: number) => {
-    console.log(id)
-  }
-
-  const handleDelete = (id: number) => {
-    console.log(id)
-  }
-
+export default function UserTable({ users, onEdit, onDelete }: UserTableProps) {
   return (
-    <div className='overflow-x-auto mb-10'>
-      <table className='min-w-full table-auto border-collapse'>
-        <thead className='bg-gray-100 font-montserrat '>
-          <tr>
-            <th className='px-6 py-5 text-left font-bold text-gray-700 border-b'>
-              Name
-            </th>
-            <th className='px-6 py-5 text-left font-bold text-gray-700 border-b'>
-              Email
-            </th>
-            <th className='px-6 py-5 text-left font-bold text-gray-700 border-b'>
-              Role
-            </th>
-            <th className='px-6 py-5 text-left font-bold text-gray-700 border-b'>
-              Status
-            </th>
-            <th className='px-6 py-5 text-center font-bold text-gray-700 border-b'>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        
-        <tbody className='text-sm'>
-          {usersData.map((user: usersDataTypes, index: number) => (
-            <tr
-              key={user.id}
-              className={`font-lexend hover:bg-gray-200 font-medium cursor-pointer ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-100"
-              }`}>
-              <td className='px-6 py-4 border-b'>{user.name}</td>
-              <td className='px-6 py-4 border-b'>{user.email}</td>
-              <td className='px-6 py-4 border-b'>{user.role}</td>
-              <td className='px-6 py-4 border-b'>{user.status}</td>
-              <td className='px-6 py-4 border-b flex gap-5 items-center justify-center'>
-                <ActionButton
-                  type='edit'
-                  onClick={() => {
-                    handleEdit(index)
-                    handleOpen()
-                  }}
-                  index={1}
-                />
-                <ActionButton
-                  type='delete'
-                  onClick={() => handleDelete(index)}
-                  index={1}
-                />
-              </td>
+    <div className='bg-white rounded-lg shadow overflow-hidden'>
+      <div className='overflow-x-auto'>
+        <table className='min-w-full divide-y divide-gray-200'>
+          <thead className='bg-gray-50'>
+            <tr>
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                User
+              </th>
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Role
+              </th>
+              <th className='hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Status
+              </th>
+              <th className='hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Last Login
+              </th>
+              <th className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <UserEdit open={open} handleClose={handleClose} />
+          </thead>
+          <tbody className='bg-white divide-y divide-gray-200'>
+            {users.map((user) => (
+              <tr key={user.id} className='hover:bg-gray-50'>
+                <td className='px-6 py-4 whitespace-nowrap'>
+                  <div className='flex items-center'>
+                    <div className='flex-shrink-0 h-10 w-10'>
+                      <img
+                        className='h-10 w-10 rounded-full'
+                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user.name
+                        )}&background=random`}
+                        alt=''
+                      />
+                    </div>
+                    <div className='ml-4'>
+                      <div className='text-sm font-medium text-gray-900'>
+                        {user.name}
+                      </div>
+                      <div className='text-sm text-gray-500'>{user.email}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap'>
+                  <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800'>
+                    {user.role}
+                  </span>
+                </td>
+                <td className='hidden sm:table-cell px-6 py-4 whitespace-nowrap'>
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      user.status === "active"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}>
+                    {user.status}
+                  </span>
+                </td>
+                <td className='hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                  {new Date(user.lastLogin).toLocaleString()}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+                  <div className='flex items-center justify-end space-x-2'>
+                    <button
+                      onClick={() => onEdit(user)}
+                      className='text-blue-600 hover:text-blue-900'>
+                      <Edit2 className='h-4 w-4' />
+                    </button>
+                    <button
+                      onClick={() => onDelete(user.id)}
+                      className='text-red-600 hover:text-red-900'>
+                      <Trash2 className='h-4 w-4' />
+                    </button>
+                    <button className='text-gray-400 hover:text-gray-600'>
+                      <MoreVertical className='h-4 w-4' />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
-
-export default UserTable
