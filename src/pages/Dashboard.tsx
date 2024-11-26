@@ -19,6 +19,7 @@ import {
   LineController,
 } from "chart.js"
 import { Chart } from "react-chartjs-2"
+import NumberTicker from "@/components/NumberTicker"
 // import { CustomToast } from "../components/Toast"
 
 ChartJS.register(
@@ -36,13 +37,13 @@ const cardData = [
   {
     id: 1,
     title: "Total Users",
-    value: "1,234",
+    value: "1234",
     icon: <FaUsers className='text-4xl text-blue-500' />,
   },
   {
     id: 2,
     title: "Revenue",
-    value: "$12,345",
+    value: "12345",
     icon: <FaChartLine className='text-4xl text-green-500' />,
   },
   {
@@ -53,6 +54,7 @@ const cardData = [
   },
 ]
 
+type cardDataTypes = (typeof cardData)[0]
 
 const Dashboard: React.FC = () => {
   return (
@@ -68,17 +70,23 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-14'>
-        {cardData.map((card) => (
+        {cardData.map((card: cardDataTypes, index: number) => (
           <div
-            key={card.id}
+            key={index}
             className='bg-white cursor-pointer shadow-md rounded-lg p-6 flex items-center justify-between hover:shadow-xl transition duration-300'>
             <div>
               <h4 className='text-gray-500 font-lexend text-lg font-medium'>
                 {card.title}
               </h4>
-              <p className='text-2xl font-lexend font-medium text-gray-800'>
-                {card.value}
+              <p className="flex items-center gap-1">
+                {index === 1 && (
+                  <p className="font-lexend text-2xl font-bold">$</p>
+                )}
+                <NumberTicker value={Number(card.value)} />
               </p>
+              {/* <p className='text-2xl font-lexend font-medium text-gray-800'>
+                {card.value}
+              </p> */}
             </div>
             {card.icon}
           </div>
