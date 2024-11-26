@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import Sidebar from "./Sidebar"
-import Toast from "./Toast"
 import Lottie from "lottie-react"
 import menu_icon from "../assets/menu_icon.json"
 import close_icon from "../assets/close_icon.json"
@@ -37,9 +36,9 @@ const Navbar: React.FC = () => {
             Manage Roles
           </Link>
           <Link
-            to='/permissions'
+            to='/login'
             className='custom-gradient-text lg:text-base text-sm poppins-700 text-[17px] px-2 py-2 border-bottom-gradient'>
-            Manage Permissions
+            Login
           </Link>
         </div>
         {/* Mobile view */}
@@ -53,7 +52,6 @@ const Navbar: React.FC = () => {
           <Sidebar open={open} toggleDrawer={toggleDrawer} />
         </div>
       </div>
-      <Toast />
     </div>
   )
 }

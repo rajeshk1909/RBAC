@@ -31,9 +31,9 @@ const sidebarItems = [
     text: "Manage Roles",
   },
   {
-    to: "/permissions",
+    to: "/login",
     icon: <Lock />,
-    text: "Manage Permissions",
+    text: "Login",
   },
 ]
 

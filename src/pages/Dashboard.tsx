@@ -58,7 +58,7 @@ type cardDataTypes = (typeof cardData)[0]
 
 const Dashboard: React.FC = () => {
   return (
-    <div className='p-6 bg-gray-100 min-h-screen mb-20 rounded-2xl'>
+    <div className='p-6 lg:mx-[10%] mx-[3%] bg-gray-100 min-h-screen mb-20 rounded-2xl'>
       <h2 className='text-3xl font-bold mb-6 uppercase text-gray-700'>
         Dashboard
       </h2>
@@ -78,9 +78,9 @@ const Dashboard: React.FC = () => {
               <h4 className='text-gray-500 font-lexend text-lg font-medium'>
                 {card.title}
               </h4>
-              <p className="flex items-center gap-1">
+              <p className='flex items-center gap-1'>
                 {index === 1 && (
-                  <p className="font-lexend text-2xl font-bold">$</p>
+                  <p className='font-lexend text-2xl font-bold'>$</p>
                 )}
                 <NumberTicker value={Number(card.value)} />
               </p>
