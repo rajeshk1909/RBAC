@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Plus, Filter } from "lucide-react"
 import RoleTable from "../components/RoleTable"
-import RoleModal from "../components/modals/RoleModal"
+import RoleModal from "../components/RoleModal"
 import { RootState } from "../store"
 import { addRole, updateRole, deleteRole } from "../store/slices/rolesSlice"
 import { Role } from "../types"
@@ -84,19 +84,3 @@ export default function Roles() {
     </div>
   )
 }
-
-// import React from "react"
-// import RoleTable from "../components/RoleTable"
-
-// const RoleManagement: React.FC = () => {
-//   return (
-//     <div className='lg:mx-[10%] mx-[3%]'>
-//       <h2 className='text-2xl font-bold mb-6 uppercase font-montserrat'>
-//         Manage Roles
-//       </h2>
-//       <RoleTable />
-//     </div>
-//   )
-// }
-
-// export default RoleManagement
