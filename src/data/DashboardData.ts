@@ -1,7 +1,7 @@
 export const DashboardData = [
     { title: "Users", description: "Manage users here.", link: "/users", bgColor: "bg-blue-500" },
     { title: "Roles", description: "Manage roles here.", link: "/roles", bgColor: "bg-green-500" },
-    { title: "Permissions", description: "Manage permissions here.", link: "/permissions", bgColor: "bg-yellow-500" },
+    { title: "Login", description: "Login here.", link: "/login", bgColor: "bg-yellow-500" },
 ];
 
 export const chartData = {
