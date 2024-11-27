@@ -15,6 +15,7 @@ type LoginFormData = {
 }
 
 export default function Login() {
+  // For clear local Storage
   // localStorage.clear()
   const {
     register,
@@ -30,7 +31,7 @@ export default function Login() {
   const userData = useSelector((state: RootState) => state.users.users)
 
   const onSubmit = async (data: LoginFormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const ADMIN = {
       email: "admin@vrvsecurity.com",
