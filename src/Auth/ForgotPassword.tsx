@@ -41,7 +41,7 @@ const ForgotPassword = () => {
         console.log("Email is valid:", existingUser.email)
         setIsValidEmail(true)
       } else {
-        alert("Email valid Email!")
+        alert("Invalid Email!")
       }
     } else {
       // Update the user password

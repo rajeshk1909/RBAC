@@ -15,7 +15,6 @@ export default function Users() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const isAdmin = useSelector((state: RootState) => state.auth.admin)
-  console.log(isAdmin)
 
   const handleAddUser = () => {
     setSelectedUser(undefined)
@@ -76,7 +75,7 @@ export default function Users() {
             }
             `}>
             <Plus className='h-4 w-4 mr-2' />
-            Add User
+            <span>Add User</span>
           </button>
         </div>
       </div>

@@ -8,12 +8,7 @@ interface RoleTableProps {
   onDelete: (roleId: string) => void
 }
 
-export default function RoleTable({
-  roles,
-  onEdit,
-  onDelete,
-  isAdmin,
-}: RoleTableProps) {
+const RoleTable = ({ roles, onEdit, onDelete, isAdmin }: RoleTableProps) => {
   return (
     <div className='bg-white rounded-lg shadow overflow-x-auto'>
       <table className='min-w-full divide-y divide-gray-200'>
@@ -34,8 +29,8 @@ export default function RoleTable({
           </tr>
         </thead>
         <tbody className='bg-white divide-y divide-gray-200'>
-          {roles.map((role) => (
-            <tr key={role.id} className='hover:bg-gray-50'>
+          {roles.map((role, index: number) => (
+            <tr key={index} className='hover:bg-gray-50'>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <div className='text-sm font-medium text-gray-900'>
                   {role.name}
@@ -97,3 +92,5 @@ export default function RoleTable({
     </div>
   )
 }
+
+export default RoleTable

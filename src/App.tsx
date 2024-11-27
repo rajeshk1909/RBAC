@@ -17,7 +17,7 @@ const App = () => {
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname)
 
   return (
-    <div>
+    <>
       {!shouldHideNavbar && <Navbar />}
       <Toast />
       <Routes>
@@ -52,7 +52,7 @@ const App = () => {
           }
         />
       </Routes>
-    </div>
+    </>
   )
 }
 

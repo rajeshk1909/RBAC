@@ -61,7 +61,7 @@ export default function Roles() {
                 : "cursor-not-allowed bg-gray-200 text-gray-500"
             } `}>
             <Filter className='h-4 w-4 mr-2' />
-            Filter
+            <span>Filter</span>
           </button>
           <button
             onClick={() => {

@@ -8,7 +8,7 @@ import { roleSchema } from "../validations/role"
 
 interface RoleModalProps {
   role?: Role
-  permissions: Permission[]
+  permissions: Permission[] 
   onSubmit: (data: Partial<Role>) => void
   onClose: () => void
 }
@@ -25,8 +25,20 @@ export default function RoleModal({
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(roleSchema),
-    defaultValues: role || {},
+    defaultValues: role || { permissions: [] },
   })
+
+  const handleFormSubmit = (data: Partial<Role>) => {
+    const permissionObjects =
+      data.permissions
+        ?.map((permissionId) => {
+          const permission = permissions.find((p) => p.id === permissionId)
+          return permission 
+        })
+        .filter((permission) => permission !== undefined) || [] 
+
+    onSubmit({ ...data, permissions: permissionObjects })
+  }
 
   return (
     <div className='fixed inset-0 z-50 overflow-y-auto'>
@@ -48,7 +60,7 @@ export default function RoleModal({
             </button>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+          <form onSubmit={handleSubmit(handleFormSubmit)} className='space-y-4'>
             <Input label='Name' {...register("name")} error={errors.name} />
 
             <Input
@@ -68,8 +80,8 @@ export default function RoleModal({
                     className='flex items-center space-x-2 p-2 hover:bg-gray-50'>
                     <input
                       type='checkbox'
-                      {...register("permissions")}
-                      value={permission.id}
+                      {...register("permissions")} // Use permission IDs here
+                      value={permission.id} // Store permission ID in the form
                       defaultChecked={role?.permissions.some(
                         (p) => p.id === permission.id
                       )}
