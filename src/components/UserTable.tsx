@@ -8,12 +8,12 @@ interface UserTableProps {
   onDelete: (userId: string) => void
 }
 
-export default function UserTable({
+const  UserTable = ({
   users,
   onEdit,
   onDelete,
   isAdmin,
-}: UserTableProps) {
+}: UserTableProps) => {
   return (
     <div className='bg-white rounded-lg shadow overflow-hidden'>
       <div className='overflow-x-auto'>
@@ -114,3 +114,5 @@ export default function UserTable({
     </div>
   )
 }
+
+export default UserTable

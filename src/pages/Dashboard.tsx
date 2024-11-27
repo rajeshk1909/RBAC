@@ -56,13 +56,12 @@ const cardData = [
 type cardDataTypes = (typeof cardData)[0]
 
 const Dashboard: React.FC = () => {
-
   return (
     <div className='p-6 lg:mx-[10%] mx-[3%] bg-gray-100 min-h-screen mb-20 rounded-2xl'>
       <h2 className='text-3xl font-bold mb-6 uppercase text-gray-700'>
         Dashboard
       </h2>
-      
+
       <div className='grid grid-cols-1 mb-12 mt-10 md:grid-cols-3 gap-6'>
         {DashboardData.map((data: DashboardDataTypes, index: number) => (
           <DashboardCard data={data} key={index} />
@@ -78,12 +77,12 @@ const Dashboard: React.FC = () => {
               <h4 className='text-gray-500 font-lexend text-lg font-medium'>
                 {card.title}
               </h4>
-              <p className='flex items-center gap-1'>
+              <div className='flex items-center gap-1'>
                 {index === 1 && (
-                  <p className='font-lexend text-2xl font-bold'>$</p>
+                  <span className='font-lexend text-2xl font-bold'>$</span>
                 )}
                 <NumberTicker value={Number(card.value)} />
-              </p>
+              </div>
             </div>
             {card.icon}
           </div>
@@ -98,7 +97,6 @@ const Dashboard: React.FC = () => {
           <Chart type='line' data={chartData} options={chartOptions} />
         </div>
       </div>
-
     </div>
   )
 }
