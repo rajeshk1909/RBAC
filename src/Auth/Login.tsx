@@ -40,6 +40,8 @@ export default function Login() {
 
     const currentUser = userData?.find((user) => user.email === data.email)
 
+    console.log(currentUser)
+
     // Handle admin
     if (data.email === ADMIN.email) {
       if (data.password === ADMIN.password) {
@@ -50,6 +52,7 @@ export default function Login() {
           role: "Admin",
           status: "Active",
           lastLogin: new Date().toISOString(),
+          password: ADMIN.password,
         }
 
         dispatch(setCurrentUser(admin))
@@ -64,7 +67,8 @@ export default function Login() {
 
     // Handle non-admin users
     if (currentUser) {
-      if (currentUser.password === data.password) {
+      console.log(currentUser.password)
+      if (currentUser.password == data.password) {
         const newUser = {
           name: currentUser.name,
           email: currentUser?.email,
@@ -72,6 +76,7 @@ export default function Login() {
           role: "User",
           status: currentUser?.status,
           lastLogin: new Date().toISOString(),
+          password: currentUser.password,
         }
 
         dispatch(setAdmin(false))
@@ -86,7 +91,7 @@ export default function Login() {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+    <div className='min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center rounded-md py-12 px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <div className='flex justify-center animate-bounce'>
           <Shield className='w-12 h-12 text-blue-600' />
@@ -105,7 +110,7 @@ export default function Login() {
       </div>
 
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
-        <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
+        <div className='bg-white py-8 px-6 shadow-lg rounded-lg sm:rounded-lg sm:px-10'>
           <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
             <Input
               label='Email address'
@@ -137,11 +142,11 @@ export default function Login() {
               </div>
 
               <div className='text-sm'>
-                <a
-                  href='#'
-                  className='font-medium text-blue-600 hover:text-blue-500'>
-                  Forgot your password?
-                </a>
+                <Link to='/forgotpassword'>
+                  <button className='font-medium text-blue-600 hover:text-blue-500'>
+                    Forgot your password?
+                  </button>
+                </Link>
               </div>
             </div>
 

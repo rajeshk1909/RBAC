@@ -7,12 +7,13 @@ import Toast from "./components/Toast"
 import PrivateRoute from "./components/PrivateRoute"
 import Login from "./Auth/Login"
 import Register from "./Auth/Register"
+import ForgotPassword from "./Auth/ForgotPassword"
 
 const App = () => {
   const location = useLocation()
 
   // Hide Navbar for specific routes
-  const hideNavbarRoutes = ["/login", "/register"]
+  const hideNavbarRoutes = ["/login", "/register", "/forgotpassword"]
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname)
 
   return (
@@ -23,6 +24,7 @@ const App = () => {
         {/* Public Routes */}
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/forgotpassword' element={<ForgotPassword />} />
 
         {/* Protected Routes */}
         <Route

@@ -27,11 +27,26 @@ const usersSlice = createSlice({
         state.users[index] = action.payload;
       }
     },
+    updatePassword: (state, action: PayloadAction<{ email: string; newPassword: string }>) => {
+  const { email, newPassword } = action.payload;
+
+  const userIndex = state.users.findIndex(user => user.email === email);
+
+  if (userIndex !== -1) {
+    state.users[userIndex].password = newPassword;
+
+    localStorage.setItem("users", JSON.stringify(state.users));
+
+    console.log(`Password for user ${email} successfully updated.`);
+  } else {
+    console.error("User not found for password update.");
+  }
+},
     deleteUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter(user => user.id !== action.payload);
     },
   },
 });
 
-export const { addUser, updateUser, deleteUser } = usersSlice.actions;
+export const { addUser, updateUser, deleteUser , updatePassword } = usersSlice.actions;
 export default usersSlice.reducer;
