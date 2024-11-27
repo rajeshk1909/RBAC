@@ -2,16 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types';
 import { mockUsers } from '../../data/mockData';
 
+
 interface UsersState {
   users: User[];
-  loading: boolean;
-  error: string | null;
 }
 
+const userData = localStorage.getItem("users")
+const mockUserData  = userData !== null ? JSON.parse(userData) : mockUsers
+
 const initialState: UsersState = {
-  users: mockUsers,
-  loading: false,
-  error: null,
+  users: mockUserData,
 };
 
 const usersSlice = createSlice({
@@ -30,11 +30,8 @@ const usersSlice = createSlice({
     deleteUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter(user => user.id !== action.payload);
     },
-    setUsers: (state, action: PayloadAction<User[]>) => {
-      state.users = action.payload;
-    },
   },
 });
 
-export const { addUser, updateUser, deleteUser, setUsers } = usersSlice.actions;
+export const { addUser, updateUser, deleteUser } = usersSlice.actions;
 export default usersSlice.reducer;

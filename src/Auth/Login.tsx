@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { loginSchema } from "../validations/auth"
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
-import { setUser } from "../store/slices/authSlice"
+import { setAdmin, setCurrentUser } from "../store/slices/authSlice"
 import { Shield } from "lucide-react"
+import { RootState } from "@/store"
 
 type LoginFormData = {
   email: string
@@ -14,6 +15,7 @@ type LoginFormData = {
 }
 
 export default function Login() {
+  // localStorage.clear()
   const {
     register,
     handleSubmit,
@@ -25,44 +27,74 @@ export default function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const userData = useSelector((state: RootState) => state.users.users)
+
   const onSubmit = async (data: LoginFormData) => {
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      // Mock user data
-      const userData = {
-        id: "1",
-        email: data.email,
-        name: "John Doe",
-        role: {
-          id: "1",
+    const ADMIN = {
+      email: "admin@vrvsecurity.com",
+      password: "Admin123",
+    }
+
+    const currentUser = userData?.find((user) => user.email === data.email)
+
+    // Handle admin
+    if (data.email === ADMIN.email) {
+      if (data.password === ADMIN.password) {
+        const admin = {
+          id: "Admin",
           name: "Admin",
-          description: "Full system access",
-          permissions: [],
-        },
-        status: "active" as const,
-        lastLogin: new Date().toISOString(),
-      }
+          email: ADMIN?.email,
+          role: "Admin",
+          status: "Active",
+          lastLogin: new Date().toISOString(),
+        }
 
-      dispatch(setUser(userData))
-      navigate("/")
-    } catch (error) {
-      console.error("Login failed:", error)
+        dispatch(setCurrentUser(admin))
+        dispatch(setAdmin(true))
+        navigate("/")
+        return
+      } else {
+        alert("Invalid password for admin account.")
+        return
+      }
+    }
+
+    // Handle non-admin users
+    if (currentUser) {
+      if (currentUser.password === data.password) {
+        const newUser = {
+          name: currentUser.name,
+          email: currentUser?.email,
+          id: currentUser?.id,
+          role: "User",
+          status: currentUser?.status,
+          lastLogin: new Date().toISOString(),
+        }
+
+        dispatch(setAdmin(false))
+        dispatch(setCurrentUser(newUser))
+        navigate("/")
+      } else {
+        alert("Incorrect password. Please try again.")
+      }
+    } else {
+      alert("No account found with this email. Please check your email.")
     }
   }
 
   return (
-    <div className='min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+    <div className='min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-        <div className='flex justify-center'>
+        <div className='flex justify-center animate-bounce'>
           <Shield className='w-12 h-12 text-blue-600' />
         </div>
-        <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+        <h2 className='mt-6 text-center text-3xl font-montserrat font-bold text-gray-900'>
           Sign in to your account
         </h2>
-        <p className='mt-2 text-center text-sm text-gray-600'>
-          Or{" "}
+        <p className='mt-2 text-center flex justify-center gap-2 font-medium font-lexend text-sm text-gray-600'>
+          Or
           <Link
             to='/register'
             className='font-medium text-blue-600 hover:text-blue-500'>
@@ -112,7 +144,10 @@ export default function Login() {
               </div>
             </div>
 
-            <Button type='submit' className='w-full' loading={isSubmitting}>
+            <Button
+              type='submit'
+              className='w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-transform transform hover:scale-105'
+              loading={isSubmitting}>
               Sign in
             </Button>
           </form>

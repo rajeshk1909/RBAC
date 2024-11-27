@@ -1,9 +1,10 @@
 export interface User {
   id: string;
-  name: string;
   email: string;
+  name: string;
+  password: string;
   role: string;
-  status: 'active' | 'inactive';
+  status: string;
   lastLogin: string;
 }
 

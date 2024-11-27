@@ -2,12 +2,18 @@ import { User } from "../types"
 import { Edit2, Trash2, MoreVertical } from "lucide-react"
 
 interface UserTableProps {
+  isAdmin: boolean
   users: User[]
   onEdit: (user: User) => void
   onDelete: (userId: string) => void
 }
 
-export default function UserTable({ users, onEdit, onDelete }: UserTableProps) {
+export default function UserTable({
+  users,
+  onEdit,
+  onDelete,
+  isAdmin,
+}: UserTableProps) {
   return (
     <div className='bg-white rounded-lg shadow overflow-hidden'>
       <div className='overflow-x-auto'>
@@ -74,13 +80,25 @@ export default function UserTable({ users, onEdit, onDelete }: UserTableProps) {
                 <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
                   <div className='flex items-center justify-end space-x-2'>
                     <button
-                      onClick={() => onEdit(user)}
-                      className='text-blue-600 hover:text-blue-900'>
+                      onClick={() => {
+                        isAdmin && onEdit(user)
+                      }}
+                      className={` ${
+                        isAdmin
+                          ? "text-blue-600 hover:text-blue-900"
+                          : "cursor-not-allowed text-gray-300 "
+                      } `}>
                       <Edit2 className='h-4 w-4' />
                     </button>
                     <button
-                      onClick={() => onDelete(user.id)}
-                      className='text-red-600 hover:text-red-900'>
+                      onClick={() => {
+                        isAdmin && onDelete(user.id)
+                      }}
+                      className={` ${
+                        isAdmin
+                          ? "text-red-600 hover:text-red-900"
+                          : "cursor-not-allowed text-gray-300 "
+                      } `}>
                       <Trash2 className='h-4 w-4' />
                     </button>
                     <button className='text-gray-400 hover:text-gray-600'>

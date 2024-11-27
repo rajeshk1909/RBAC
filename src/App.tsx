@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
 import UserManagement from "./pages/UserManagement"
 import RoleManagement from "./pages/RoleManagement"
@@ -59,10 +54,4 @@ const App = () => {
   )
 }
 
-const AppWrapper = () => (
-  <Router>
-    <App />
-  </Router>
-)
-
-export default AppWrapper
+export default App

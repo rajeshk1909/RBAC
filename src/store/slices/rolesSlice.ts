@@ -4,14 +4,13 @@ import { mockRoles } from '../../data/mockData';
 
 interface RolesState {
   roles: Role[];
-  loading: boolean;
-  error: string | null;
 }
 
+const data = localStorage.getItem("roles")
+const rolesData = data !== null ? JSON.parse(data) : mockRoles
+
 const initialState: RolesState = {
-  roles: mockRoles,
-  loading: false,
-  error: null,
+  roles: rolesData,
 };
 
 const rolesSlice = createSlice({
