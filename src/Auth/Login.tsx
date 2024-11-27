@@ -8,6 +8,7 @@ import { Button } from "../components/Button"
 import { setAdmin, setCurrentUser } from "../store/slices/authSlice"
 import { Shield } from "lucide-react"
 import { RootState } from "@/store"
+import { useToast } from "@/components/ToastContext"
 
 type LoginFormData = {
   email: string
@@ -29,6 +30,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const userData = useSelector((state: RootState) => state.users.users)
+  const { showToast } = useToast()
 
   const onSubmit = async (data: LoginFormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -54,13 +56,14 @@ export default function Login() {
           lastLogin: new Date().toISOString(),
           password: ADMIN.password,
         }
-
+        showToast("success", "Login successful")
+        showToast("info", "You're logged in as admin!")
         dispatch(setCurrentUser(admin))
         dispatch(setAdmin(true))
         navigate("/")
         return
       } else {
-        alert("Invalid password for admin account.")
+        showToast("error", "Invalid password for admin account.")
         return
       }
     }
@@ -78,15 +81,18 @@ export default function Login() {
           lastLogin: new Date().toISOString(),
           password: currentUser.password,
         }
-
+        showToast("success", "Login successful")
         dispatch(setAdmin(false))
         dispatch(setCurrentUser(newUser))
         navigate("/")
       } else {
-        alert("Incorrect password. Please try again.")
+        showToast("error", "Invalid password.")
       }
     } else {
-      alert("No account found with this email. Please check your email.")
+       showToast(
+         "error",
+         "No account found with this email. Please check your email."
+       )
     }
   }
 

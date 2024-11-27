@@ -10,6 +10,7 @@ import { Shield } from "lucide-react"
 import { RootState } from "@/store"
 import { z } from "zod"
 import { updatePassword } from "@/store/slices/usersSlice"
+import { useToast } from "@/components/ToastContext"
 
 type ForgotPasswordData = z.infer<typeof forgotOrResetPasswordSchema>
 
@@ -18,6 +19,7 @@ const ForgotPassword = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userData = useSelector((state: RootState) => state.users.users)
+  const { showToast } = useToast()
 
   const {
     register,
@@ -41,7 +43,7 @@ const ForgotPassword = () => {
         console.log("Email is valid:", existingUser.email)
         setIsValidEmail(true)
       } else {
-        alert("Invalid Email!")
+        showToast("error", "Invalid email address!")
       }
     } else {
       // Update the user password
@@ -56,13 +58,13 @@ const ForgotPassword = () => {
               newPassword: newPassword,
             })
           )
-          console.log("Password successfully updated.")
+          showToast("success", "Password successfully updated.")
           navigate("/login")
         } else {
-          console.error("New password is required!")
+          showToast("error", "New password is required!")
         }
       } else {
-        console.error("User not found for password update.")
+        showToast("error", "User not found for password update.")
       }
     }
   }
