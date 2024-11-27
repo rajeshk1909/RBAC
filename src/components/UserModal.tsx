@@ -13,12 +13,12 @@ interface UserModalProps {
   onClose: () => void
 }
 
-export default function UserModal({
+const UserModal = ({
   user,
   roles,
   onSubmit,
   onClose,
-}: UserModalProps) {
+}: UserModalProps) => {
   const {
     register,
     handleSubmit,
@@ -105,3 +105,5 @@ export default function UserModal({
     </div>
   )
 }
+
+export default UserModal

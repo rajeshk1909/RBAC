@@ -8,6 +8,7 @@ import { Button } from "../components/Button"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store"
 import { addUser } from "@/store/slices/usersSlice"
+import { useToast } from "@/components/ToastContext"
 
 type RegisterFormData = {
   name: string
@@ -28,6 +29,7 @@ export default function Register() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userData = useSelector((state: RootState) => state.users.users)
+  const { showToast } = useToast()
 
   const onSubmit = async (data: RegisterFormData) => {
     const checkEmail = userData.find((user) => user.email === data.email)
@@ -47,8 +49,9 @@ export default function Register() {
         dispatch(addUser(newUser))
         await new Promise((resolve) => setTimeout(resolve, 1000))
         navigate("/login")
+        showToast("success", "Account created successfully!")
       } else {
-        alert("Email already exists!")
+        showToast("info", "Email already exists!")
       }
     } catch (error) {
       console.error("Registration failed:", error)

@@ -5,20 +5,21 @@ import { Input } from "./Input"
 import { Button } from "./Button"
 import { Role, Permission } from "../types"
 import { roleSchema } from "../validations/role"
+import { useToast } from "./ToastContext"
 
 interface RoleModalProps {
   role?: Role
-  permissions: Permission[] 
+  permissions: Permission[]
   onSubmit: (data: Partial<Role>) => void
   onClose: () => void
 }
 
-export default function RoleModal({
+const RoleModal = ({
   role,
   permissions,
   onSubmit,
   onClose,
-}: RoleModalProps) {
+}: RoleModalProps) => {
   const {
     register,
     handleSubmit,
@@ -28,16 +29,19 @@ export default function RoleModal({
     defaultValues: role || { permissions: [] },
   })
 
+  const {showToast} = useToast()
+
   const handleFormSubmit = (data: Partial<Role>) => {
     const permissionObjects =
       data.permissions
         ?.map((permissionId) => {
           const permission = permissions.find((p) => p.id === permissionId)
-          return permission 
+          return permission
         })
-        .filter((permission) => permission !== undefined) || [] 
+        .filter((permission) => permission !== undefined) || []
 
     onSubmit({ ...data, permissions: permissionObjects })
+    showToast("success", "Changes applied")
   }
 
   return (
@@ -117,3 +121,5 @@ export default function RoleModal({
     </div>
   )
 }
+
+export default RoleModal
